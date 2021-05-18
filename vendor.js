@@ -2,7 +2,6 @@
 
 const faker = require("faker");
 
-const uuid = require('uuid').v4
 const AWS = require("aws-sdk");
 AWS.config.update({ region: "us-west-2" });
 
@@ -10,15 +9,15 @@ const sns = new AWS.SNS();
 
 const sns_topic = "arn:aws:sns:us-west-2:077526148259:pickup.fifo";
 
-const { Producer } = require('sqs-producer');
+// const { Producer } = require('sqs-producer');
 const { Consumer } = require('sqs-consumer');
 
-const producer = Producer.create({
-  queueUrl: `https://sqs.us-west-2.amazonaws.com/077526148259/packages.fifo`,
-  region: `us-west-2`,
-  MessageGroupId:'123',
-  MessageDeduplicationId:faker.datatype.uuid()
-});
+// const producer = Producer.create({
+//   queueUrl: `https://sqs.us-west-2.amazonaws.com/077526148259/packages.fifo`,
+//   region: `us-west-2`,
+//   MessageGroupId:'123',
+//   MessageDeduplicationId:faker.datatype.uuid()
+// });
 
 const app = Consumer.create({
   queueUrl: 'https://sqs.us-west-2.amazonaws.com/077526148259/vendor',
@@ -64,6 +63,15 @@ setInterval(async () => {
   // } catch (e) {
   //   console.error(e);
   // }
-}, Math.floor(Math.random() * 1000));
+// }, Math.floor(Math.random() * 1000));
+// }, 5000);
 
 
+// const app = Consumer.create({
+//   queueUrl: 'https://sqs.us-west-2.amazonaws.com/077526148259/vendor',
+//   handleMessage: async (message) => {
+//     console.log(JSON.parse(message.Body));
+//   }
+// });
+
+app.start();
